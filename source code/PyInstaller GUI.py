@@ -4,6 +4,13 @@ import os
 import subprocess
 import webbrowser
 
+
+
+'''
+GUI Initializing
+------------------------------
+'''
+
 # initialize windoww
 root = Tk()
 s = ttk.Style()
@@ -16,6 +23,17 @@ s.configure("Title.TLabel", font=('*', 25), padding=15)
 # creates a page title
 title = ttk.Label(root, text='PyInstaller GUI', style='Title.TLabel')
 title.pack()
+
+'''
+------------------------------
+'''
+
+
+
+'''
+------------------------------
+Installing PyInstaller section
+'''
 
 # creates div for pip/pip3 install pyinstaller
 pipFrame = ttk.Frame(root, padding=15)
@@ -47,6 +65,16 @@ pipCheck3.pack(side=LEFT)
 installBtn = ttk.Button(pipFrame, text='Install PyInstaller', command=installPyInstaller)
 installBtn.pack(side=LEFT)
 
+'''
+------------------------------
+'''
+
+
+
+'''
+Functions
+------------------------------
+'''
 
 def newWin(geoStr, showTitle, Lab1Str):
     '''
@@ -119,6 +147,13 @@ def dataQuestionFunc():
     dataWhatis.pack()
 
 
+def sourcecodeFunc():
+    '''
+    Opens source code on GitHub in browser
+    '''
+    webbrowser.open_new_tab('https://github.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/tree/main/source%20code')
+
+
 def runPyInstaller():
     '''
     Runs PyInstaller in cmd prompt with parameters taken from GUI
@@ -166,6 +201,17 @@ def runPyInstaller():
     if noRun == False:
         newWin('500x150', 'Running in terminal:', runList)
         subprocess.call(runList)
+
+'''
+------------------------------
+'''
+
+
+
+'''
+User input for pyinstaller parameters
+------------------------------
+'''
 
 # creates div for checkboxes/entries
 checksFrame = ttk.Frame(root, padding=20)
@@ -229,14 +275,45 @@ dataQuestion.pack(side=LEFT)
 runPyInstaller = ttk.Button(checksFrame, text='Run PyInstaller', command=runPyInstaller)
 runPyInstaller.pack()
 
+'''
+------------------------------
+'''
+
+
+
+'''
+Credits (on GUI)
+------------------------------
+'''
+
+# credits at bottom
 creditFrame = ttk.Frame(root, padding=10)
 creditFrame.pack()
-
 creditLab1 = ttk.Label(creditFrame, text='PyInstaller GUI for Windows')
 creditLab2 = ttk.Label(creditFrame, text='Made by: Jason')
 creditLab3 = ttk.Label(creditFrame, text='This app is not associated with PyInstaller')
+creditLab4 = ttk.Label(creditFrame, text='Version 1.1')
+sourcecodeButton = ttk.Button(creditFrame, text='View source code (GitHub)', command=sourcecodeFunc)
 creditLab1.pack()
 creditLab2.pack()
 creditLab3.pack()
+creditLab4.pack()
+sourcecodeButton.pack()
 
-root.mainloop()
+'''
+------------------------------
+'''
+
+
+
+'''
+Run Tkinter GUI
+------------------------------
+'''
+
+if __name__ == '__main__':
+    root.mainloop()
+
+'''
+------------------------------
+'''
