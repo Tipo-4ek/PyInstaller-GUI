@@ -168,6 +168,10 @@ def runPyInstaller():
     addDataCheck = str(dataVar.get())
     addDataFilesStr = str(dataIn.get())
     noRun = False
+    if " " in filePathStr:
+        filePathStr = "\"" + filePathStr + "\""
+    else:
+        pass
 
     # list to run with subprocess.call()
     runList = ['pyinstaller']
@@ -292,7 +296,7 @@ creditFrame.pack()
 creditLab1 = ttk.Label(creditFrame, text='PyInstaller GUI for Windows')
 creditLab2 = ttk.Label(creditFrame, text='Made by: Jason')
 creditLab3 = ttk.Label(creditFrame, text='This app is not associated with PyInstaller')
-creditLab4 = ttk.Label(creditFrame, text='Version 1.1')
+creditLab4 = ttk.Label(creditFrame, text='Version 1.2')
 sourcecodeButton = ttk.Button(creditFrame, text='View source code (GitHub)', command=sourcecodeFunc)
 creditLab1.pack()
 creditLab2.pack()
