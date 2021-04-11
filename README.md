@@ -8,3 +8,11 @@ Video Demonstration: https://drive.google.com/file/d/1dwR2k6FFBZVJRPQ5TziQe4trdZ
 1. Download PyInstaller GUI
 2. Move .exe file to the same directory as your .py file
 3. Follow easy instructions on PyInstaller GUI
+
+## Version History:
+### Version 1.2 (current):
+- Bug fixes
+### Version 1.1:
+- Refactor code
+### Version 1.0:
+- Create PyInstaller GUI
