@@ -172,6 +172,10 @@ def runPyInstaller():
         filePathStr = "\"" + filePathStr + "\""
     else:
         pass
+    if " " in iconPathStr:
+        iconPathStr = "\"" + iconPathStr + "\""
+    else:
+        pass
 
     # list to run with subprocess.call()
     runList = ['pyinstaller']
