@@ -134,7 +134,7 @@ def checkUpdate(method='Button'):
                 except ValueError:
                     v2NotFound = True
         if v2NotFound:
-            # chekcs for 3.x languages
+            # checks for 3.x versions
             for i in range(1, 21):
                 try:
                     index = github_page_html.index(('3.' + str(i)))
