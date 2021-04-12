@@ -15,7 +15,7 @@ GUI Initializing
 # initialize windoww
 root = Tk()
 s = ttk.Style()
-root.geometry('600x650')
+root.geometry('600x630')
 root.title('PyInstaller GUI')
 
 # configure styles
@@ -246,13 +246,13 @@ def runPyInstaller():
     '''
 
     # gets user defined parameters into strings
-    filePathStr = str(dirPath.get())
+    filePathStr = str(dirPath.get()) + '.py'
     nameStr = str(nameIn.get())
     oneFile = str(oneFileVar.get())
     noConsole = str(noConsoleVar.get())
     cleanCache = str(cleanVar.get())
     iconPathCheck = str(iconVar.get())
-    iconPathStr = str(iconPath.get())
+    iconPathStr = str(iconPath.get()) + '.ico'
     addDataCheck = str(dataVar.get())
     addDataFilesStr = str(dataIn.get())
     distPathCheck = str(distpathVar.get())
@@ -334,6 +334,8 @@ dirPathLab = ttk.Label(dirPathFrame, text='.py File Path')
 dirPathLab.pack(side=LEFT)
 dirPath = ttk.Entry(dirPathFrame)
 dirPath.pack(side=LEFT)
+dirPathPyLab = ttk.Label(dirPathFrame, text='.py')
+dirPathPyLab.pack(side=LEFT)
 dirQuestion = ttk.Button(dirPathFrame, text='?', command=dirQuestionFunc, width=1)
 dirQuestion.pack()
 
@@ -344,6 +346,8 @@ nameLab = ttk.Label(nameFrame, text='.exe Program Name:')
 nameLab.pack(side=LEFT)
 nameIn = ttk.Entry(nameFrame, width=10)
 nameIn.pack(side=LEFT)
+nameInExeLab = ttk.Label(nameFrame, text='.exe')
+nameInExeLab.pack(side=LEFT)
 nameQuestion = ttk.Button(nameFrame, text='?', command=nameQuestionFunc, width=1)
 nameQuestion.pack(side=LEFT)
 
@@ -384,6 +388,8 @@ iconLab = ttk.Label(iconFrame, text='Icon path:\n(from directory)')
 iconLab.pack(side=LEFT)
 iconPath = ttk.Entry(iconFrame, width=10)
 iconPath.pack(side=LEFT)
+iconPathIcoLab = ttk.Label(iconFrame, text='.ico')
+iconPathIcoLab.pack(side=LEFT)
 iconQuestion = ttk.Button(iconFrame, text='?', command=iconQuestionFunc, width=1)
 iconQuestion.pack(side=LEFT)
 
@@ -429,7 +435,7 @@ Credits (on GUI)
 '''
 
 # credits at bottom
-currentVersion = '1.3'
+currentVersion = '1.4'
 creditFrame = ttk.Frame(root, padding=10)
 creditFrame.pack()
 creditLab1 = ttk.Label(creditFrame, text='PyInstaller GUI for Windows')
