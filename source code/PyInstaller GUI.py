@@ -310,7 +310,7 @@ def runPyInstaller():
     # run pyinstaller in terminal if no errors and opens window with terminal command
     if noRun == False:
         newWin(title='Running in terminal:', content1=runStr, winSize='700x150')
-        #os.system(runStr)
+        os.system(runStr)
 
 '''
 ------------------------------
