@@ -259,49 +259,49 @@ def runPyInstaller():
     distPathStr = str(distpathIn.get())
     noRun = False
     if " " in filePathStr:
-        filePathStr = "\"" + filePathStr + "\""
+        filePathStr = '"' + filePathStr + '"'
     if " " in nameStr:
-        nameStr = "\"" + nameStr + "\""
+        nameStr = '"' + nameStr + '"'
     if " " in iconPathStr:
-        iconPathStr = "\"" + iconPathStr + "\""
+        iconPathStr = '"' + iconPathStr + '"'
     if " " in distPathStr:
-        distPathStr = "\"" + distPathStr + "\""
+        distPathStr = '"' + distPathStr + '"'
 
     # list to run with subprocess.call()
-    runList = ['pyinstaller']
+    runStr = 'pyinstaller '
 
     # checks user parameters (checkboxes), appends to list
     if filePathStr:
-        runList.append(filePathStr)
+        runStr = runStr + (filePathStr + ' ')
     else:
         newWin(title='Error', content1='No .py file entered')
         noRun = True
     if nameStr != "":
-        runList.append('--name')
-        runList.append(nameStr)
+        runStr = runStr + ('--name ')
+        runStr = runStr + (nameStr + ' ')
     if oneFile == '1':
-        runList.append('--onefile')
+        runStr = runStr + ('--onefile ')
     if noConsole == '1':
-        runList.append('--noconsole')
+        runStr = runStr +('--noconsole ')
     if cleanCache == '1':
-        runList.append('--clean')
+        runStr = runStr +('--clean ')
     if iconPathCheck == '1':
         if iconPathStr:
-            runList.append('--icon=' + iconPathStr)
+            runStr = runStr + ('--icon=' + iconPathStr + ' ')
         else:
             noRun = True
             newWin(title='Error:', content1='No icon file entered')
     if addDataCheck == '1':
         if addDataFilesStr:
-            runList.append('--add-data')
-            runList.append(addDataFilesStr)
+            runStr = runStr + ('--add-data ')
+            runStr = runStr +(addDataFilesStr + ' ')
         else:
             noRun = True
             newWin(title='Error:', content1='No data files entered')
     if distPathCheck == '1':
         if distPathStr:
-            runList.append('--distpath')
-            runList.append(distPathStr)
+            runStr = runStr + ('--distpath ')
+            runStr = runStr + (distPathStr)
         else:
             noRun = True
             newWin(title='Error:', content1='No bundled app folder selected')
@@ -309,8 +309,8 @@ def runPyInstaller():
 
     # run pyinstaller in terminal if no errors and opens window with terminal command
     if noRun == False:
-        newWin(title='Running in terminal:', content1=runList, winSize='500x150')
-        subprocess.call(runList)
+        newWin(title='Running in terminal:', content1=runStr, winSize='700x150')
+        #os.system(runStr)
 
 '''
 ------------------------------
