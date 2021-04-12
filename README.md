@@ -10,7 +10,10 @@ Video Demonstration: https://drive.google.com/file/d/1dwR2k6FFBZVJRPQ5TziQe4trdZ
 3. Follow easy instructions on PyInstaller GUI
 
 ## Version History:
-### Version 1.3 (current):
+### Version 1.4 (current):
+- Easier to use and easier to understand labels
+- Change window size
+### Version 1.3:
 - New options for bundling .exe file: .exe name, distpath, clear cache
 - New check for update feature
 - Bug fixes
