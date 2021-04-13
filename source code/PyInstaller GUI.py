@@ -46,15 +46,25 @@ def installPyInstaller():
     Function for button, installs pyinstaller in cmd prompt
     '''
     if str(pipVar.get()) == '1' and str(pip3Var.get()) == '1':
-        newWin(title='Error:', content1='pip and pip3 are both selected')
+        newWin(
+            title='Error:',
+            content1='pip and pip3 are both selected'
+        )
     elif str(pipVar.get()) == '0' and str(pip3Var.get()) == '0':
-        newWin(title='Error:', content1='Neither pip nor pip3 are selected')
+        newWin(
+            title='Error:',
+            content1='Neither pip nor pip3 are selected'
+        )
     elif str(pipVar.get()) == '1' and str(pip3Var.get()) == '0':
         os.system('pip install pyinstaller')
-        newWin(title='Successfully installed PyInstaller')
+        newWin(
+            title='Successfully installed PyInstaller'
+        )
     elif str(pipVar.get()) == '0' and str(pip3Var.get()) == '1':
         os.system('pip3 install pyinstaller')
-        newWin(title='Successfully installed PyInstaller')
+        newWin(
+            title='Successfully installed PyInstaller'
+        )
 
 
 # install pyinstaller button
@@ -78,39 +88,53 @@ Functions
 ------------------------------
 '''
 
-def newWin(winSize='350x200', title='', content1='', content2=''):
+def newWin(
+        winSize='350x200',
+        title='', content1='', content2='', content3='', content4='',
+        button1txt='', button1cmd='',
+        button2txt='', button2cmd=''
+    ):
     '''
     Creates popup window with error/success message
-    This takes arguments for window size + text in window
+    This takes arguments for window size + title + content (text) + buttons
     '''
     newWin = Toplevel()
     newWin.geometry(winSize)
-    winTitleLab = ttk.Label(newWin, text=title, style="NewWin.TLabel")
-    winTitleLab.pack()
-    winLab1 = ttk.Label(newWin, text=content1, padding=5)
-    winLab1.pack()
-    winLab2 = ttk.Label(newWin, text=content2, padding=5)
-    winLab2.pack()
+    if title != '':
+        winTitleLab = ttk.Label(newWin, text=title, style="NewWin.TLabel")
+        winTitleLab.pack()
+    if content1 != '':
+        winLab1 = ttk.Label(newWin, text=content1, padding=5)
+        winLab1.pack()
+    if content2 != '':
+        winLab2 = ttk.Label(newWin, text=content2, padding=5)
+        winLab2.pack()
+    if content3 != '':
+        winLab3 = ttk.Label(newWin, text=content3, padding=5)
+        winLab3.pack()
+    if content4 != '':
+        winLab4 = ttk.Label(newWin, text=content4, padding=5)
+        winLab4.pack()
+    if button1txt != '' and button1cmd != '':
+        winBtn1 = ttk.Button(newWin, text=button1txt, command=button1cmd)
+        winBtn1.pack()
+    if button2txt != '' and button1cmd != '':
+        winBtn2 = ttk.Button(newWin, text=button2txt, command=button2cmd)
+        winBtn2.pack()
 
 
 def updateApp(version):
     '''
-    If an update is found (in lines 336-354), will open new window requesting update
+    If an update is found (in lines 131-174), will open new window requesting update
     '''
-    update = Toplevel()
     def updateFunc():
         webbrowser.open_new_tab('https://github.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(windows).zip')
-    def remindFunc():
-        update.destroy()
-    update.geometry('400x200')
-    updateTitle = ttk.Label(update, text='Update available', style="NewWin.TLabel")
-    updateTitle.pack()
-    updateLab = ttk.Label(update, text=f'Version {version} available')
-    updateLab.pack()
-    updateBtn = ttk.Button(update, text='Update now', command=updateFunc)
-    updateBtn.pack()
-    remind = ttk.Button(update, text='Remind me later', command=remindFunc)
-    remind.pack()
+    newWin(
+        winSize='400x150',
+        title='Update available',
+        content1=f'Version {version} available',
+        button1txt='Update now', button1cmd=updateFunc,
+    )
 
 
 def checkUpdate(method='Button'):
@@ -149,12 +173,18 @@ def checkUpdate(method='Button'):
             if method == 'Auto':
                 pass
             elif method == 'Button':
-                newWin(title='No update found', content1=f'Latest version: {version}')
+                newWin(
+                    title='No update found',
+                    content1=f'Latest version: {version}'
+                )
 
     # do not check for update if offline
     except requests.exceptions.ConnectionError:
         if method == 'Button':
-            newWin(title='You are offline', content1='Please connect to the internet to check for update')
+            newWin(
+                title='You are offline',
+                content1='Please connect to the internet to check for update'
+            )
         elif method == 'Button':
             pass
 
@@ -164,7 +194,12 @@ def dirQuestionFunc():
     Question mark for file path
     Opens new window with explanation
     '''
-    newWin(title='Python File Path:', content1='/directory/file.py', content2='(Starts from where this app is located)', winSize='400x200')
+    newWin(
+        title='Python File Path:',
+        content1='/directory/file.py',
+        content2='(Starts from where this app is located)',
+        winSize='400x200'
+    )
 
 
 def nameQuestionFunc():
@@ -172,7 +207,12 @@ def nameQuestionFunc():
     Question mark for name
     Opens new window with explanation
     '''
-    newWin(title='Application Name', content1='Enter custom .exe file name', content2='If no input, will use same name as py file', winSize='400x200')
+    newWin(
+        title='Application Name',
+        content1='Enter custom .exe file name',
+        content2='If no input, will use same name as py file',
+        winSize='400x200'
+    )
 
 
 def oneFileQuestionFunc():
@@ -180,7 +220,11 @@ def oneFileQuestionFunc():
     Question mark for one file
     Opens new window with explanation
     '''
-    newWin(title='What is \"One file\"?', content1='This will compile your program into one .exe file', winSize='400x200')
+    newWin(
+        title='What is \"One file\"?',
+        content1='This will compile your program into one .exe file',
+        winSize='400x200'
+    )
 
 
 def noConsoleQuestionFunc():
@@ -188,7 +232,11 @@ def noConsoleQuestionFunc():
     Question mark for no console
     Opens new window with explanation
     '''
-    newWin(title='What is \"No console\"?', content1='This will not launch the command line for your program\nLeave this unchecked if you\'re making a command line app', winSize='400x200')
+    newWin(
+        title='What is \"No console\"?',
+        content1='This will not launch the command line for your program\nLeave this unchecked if you\'re making a command line app',
+        winSize='400x200'
+    )
 
 
 def cleanQuestionFunc():
@@ -196,7 +244,11 @@ def cleanQuestionFunc():
     Question mark for clear cache and temporary files
     Opens new window with explanation
     '''
-    newWin(title='Clear cache and temporary files', content1="That\'s it", winSize='400x200')
+    newWin(
+        title='Clear cache and temporary files',
+        content1="That\'s it",
+        winSize='400x200'
+    )
 
 
 def iconQuestionFunc():
@@ -204,7 +256,11 @@ def iconQuestionFunc():
     Question mark for custom icon
     Opens new window with explanation
     '''
-    newWin(title='Custom icon format:', content1='iconfile.ico', winSize='400x200')
+    newWin(
+        title='Custom icon format:',
+        content1='iconfile.ico',
+        winSize='400x200'
+    )
 
 
 def dataQuestionFunc():
@@ -215,22 +271,23 @@ def dataQuestionFunc():
     def whatIsData():
         # opens browser tab with explanation for add data files
         webbrowser.open_new_tab('https://pyinstaller.readthedocs.io/en/stable/spec-files.html#adding-data-files')
-
-    data = Toplevel()
-    data.geometry('400x200')
-    dataTitle = ttk.Label(data, text='Add data format:', style="NewWin.TLabel")
-    dataTitle.pack()
-    dataExample = ttk.Label(data, text='source.file;dest', padding=5)
-    dataExample.pack()
-    dataWhatis = ttk.Button(data, text='What is adding data?', command=whatIsData)
-    dataWhatis.pack()
+    newWin(
+        winSize='400x200',
+        title='Add data format:',
+        content1='source.file;dest',
+        button1txt='What is adding data?', button1cmd=whatIsData,
+    )
 
 def distQuestionFunc():
     '''
     Question mark for custom bundled app folder
     Opens new window with explanation
     '''
-    newWin(title='Custom bundled app folder', content1='Folder where your app will appear', winSize='400x200')
+    newWin(
+        title='Custom bundled app folder',
+        content1='Folder where your app will appear',
+        winSize='400x200'
+    )
 
 
 def sourcecodeFunc():
@@ -248,26 +305,21 @@ def helpFunc():
         webbrowser.open_new_tab('https://www.pyinstaller.org')
     def createIssue():
         webbrowser.open_new_tab('https://github.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/issues')
-    helpWin = Toplevel()
-    helpWin.geometry('600x200')
-    helpTitle = ttk.Label(helpWin, text='Help', style='NewWin.TLabel')
-    helpTitle.pack()
-    helpLab1 = ttk.Label(helpWin, text='PyInstaller GUI is based off of but not associated with PyInstaller,')
-    helpLab2 = ttk.Label(helpWin, text='therefore we cannot provide help on PyInstaller.')
-    helpLab3 = ttk.Label(helpWin, text='For help on PyInstaller, please head to their website.')
-    helpLab4 = ttk.Label(helpWin, text='For help with this GUI or to report a bug/issue, please create an issue on GitHub.')
-    helpLab1.pack()
-    helpLab2.pack()
-    helpLab3.pack()
-    helpLab4.pack()
-    pyinstallerWebsiteBtn = ttk.Button(helpWin, text='PyInstaller website', command=pyInstallerWebsite)
-    createIssueBtn = ttk.Button(helpWin, text='Create an issue', command=createIssue)
-    pyinstallerWebsiteBtn.pack()
-    createIssueBtn.pack()
+    newWin(
+        winSize='600x225',
+        title='Help',
+        content1='PyInstaller GUI is based off of but not associated with PyInstaller,',
+        content2='therefore we cannot provide help on PyInstaller.',
+        content3='For help on PyInstaller, please head to their website.',
+        content4='For help with this GUI or to report a bug/issue, please create an issue on GitHub.',
+        button1txt='PyInstaller website', button1cmd=pyInstallerWebsite,
+        button2txt='Create an issue', button2cmd=createIssue,
+    )
 
 
 def runPyInstaller():
     '''
+    Main PyInstaller GUI function
     Runs PyInstaller in cmd prompt with parameters taken from GUI
     '''
 
@@ -300,7 +352,10 @@ def runPyInstaller():
     if filePathStr:
         runStr = runStr + (filePathStr + ' ')
     else:
-        newWin(title='Error', content1='No .py file entered')
+        newWin(
+            title='Error',
+            content1='No .py file entered'
+        )
         noRun = True
     if nameStr != "":
         runStr = runStr + ('--name ')
@@ -316,26 +371,39 @@ def runPyInstaller():
             runStr = runStr + ('--icon=' + iconPathStr + ' ')
         else:
             noRun = True
-            newWin(title='Error:', content1='No icon file entered')
+            newWin(
+                title='Error:',
+                content1='No icon file entered'
+            )
     if addDataCheck == '1':
         if addDataFilesStr:
             runStr = runStr + ('--add-data ')
             runStr = runStr +(addDataFilesStr + ' ')
         else:
             noRun = True
-            newWin(title='Error:', content1='No data files entered')
+            newWin(
+                title='Error:',
+                content1='No data files entered'
+            )
     if distPathCheck == '1':
         if distPathStr:
             runStr = runStr + ('--distpath ')
             runStr = runStr + (distPathStr)
         else:
             noRun = True
-            newWin(title='Error:', content1='No bundled app folder selected')
+            newWin(
+                title='Error:',
+                content1='No bundled app folder selected'
+            )
 
 
     # run pyinstaller in terminal if no errors and opens window with terminal command
     if noRun == False:
-        newWin(title='Running in terminal:', content1=runStr, winSize='700x150')
+        newWin(
+            title='Running in terminal:',
+            content1=runStr,
+            winSize='700x150'
+        )
         os.system(runStr)
 
 '''
