@@ -240,6 +240,32 @@ def sourcecodeFunc():
     webbrowser.open_new_tab('https://github.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/tree/main/source%20code')
 
 
+def helpFunc():
+    '''
+    Opens window with multiple options to help user
+    '''
+    def pyInstallerWebsite():
+        webbrowser.open_new_tab('https://www.pyinstaller.org')
+    def createIssue():
+        webbrowser.open_new_tab('https://github.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/issues')
+    helpWin = Toplevel()
+    helpWin.geometry('600x200')
+    helpTitle = ttk.Label(helpWin, text='Help', style='NewWin.TLabel')
+    helpTitle.pack()
+    helpLab1 = ttk.Label(helpWin, text='PyInstaller GUI is based off of but not associated with PyInstaller,')
+    helpLab2 = ttk.Label(helpWin, text='therefore we cannot provide help on PyInstaller.')
+    helpLab3 = ttk.Label(helpWin, text='For help on PyInstaller, please head to their website.')
+    helpLab4 = ttk.Label(helpWin, text='For help with this GUI or to report a bug/issue, please create an issue on GitHub.')
+    helpLab1.pack()
+    helpLab2.pack()
+    helpLab3.pack()
+    helpLab4.pack()
+    pyinstallerWebsiteBtn = ttk.Button(helpWin, text='PyInstaller website', command=pyInstallerWebsite)
+    createIssueBtn = ttk.Button(helpWin, text='Create an issue', command=createIssue)
+    pyinstallerWebsiteBtn.pack()
+    createIssueBtn.pack()
+
+
 def runPyInstaller():
     '''
     Runs PyInstaller in cmd prompt with parameters taken from GUI
@@ -445,6 +471,7 @@ creditLab4 = ttk.Label(creditFrame, text='This app is not associated with PyInst
 creditBtnFrame = ttk.Frame(creditFrame)
 sourcecodeButton = ttk.Button(creditBtnFrame, text='Source code', command=sourcecodeFunc)
 checkupdateButton = ttk.Button(creditBtnFrame, text='Check for update', command=checkUpdate)
+helpButton = ttk.Button(creditBtnFrame, text='Help', command=helpFunc)
 creditLab1.pack()
 creditLab2.pack()
 creditLab3.pack()
@@ -452,6 +479,7 @@ creditLab4.pack()
 creditBtnFrame.pack()
 sourcecodeButton.pack(side=LEFT)
 checkupdateButton.pack(side=LEFT)
+helpButton.pack(side=LEFT)
 
 '''
 ------------------------------
