@@ -10,7 +10,14 @@ Video Demonstration: https://drive.google.com/file/d/1dwR2k6FFBZVJRPQ5TziQe4trdZ
 3. Follow easy instructions on PyInstaller GUI
 
 ## Version History:
-### Version 1.4 (current):
+### Version 1.5 (current):
+- Fix button to check update
+- Add help button
+- Improve newWin() func
+- Fix opening windows
+- Refactor code
+- Bug fixes
+### Version 1.4:
 - Easier to use and easier to understand labels
 - Change window size
 ### Version 1.3:
