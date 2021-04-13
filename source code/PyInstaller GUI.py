@@ -118,7 +118,7 @@ def checkUpdate(method='Button'):
         # checks for latest version available on GitHub README file
         github_page = requests.get('https://raw.githubusercontent.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/main/README.md')
         github_page_html = str(github_page.content).split()
-        for i in range(1, 21):
+        for i in range(0, 21):
             # checks for 1.x versions
             try:
                 index = github_page_html.index(('1.' + str(i)))
@@ -127,7 +127,7 @@ def checkUpdate(method='Button'):
                 v1NotFound = True
         if v1NotFound:
             # checks for 2.x versions
-            for i in range(1, 21):
+            for i in range(0, 21):
                 try:
                     index = github_page_html.index(('2.' + str(i)))
                     version = github_page_html[index]
@@ -135,7 +135,7 @@ def checkUpdate(method='Button'):
                     v2NotFound = True
         if v2NotFound:
             # checks for 3.x versions
-            for i in range(1, 21):
+            for i in range(0, 21):
                 try:
                     index = github_page_html.index(('3.' + str(i)))
                     version = github_page_html[index]
