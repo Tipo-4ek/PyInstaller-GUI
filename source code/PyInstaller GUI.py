@@ -196,7 +196,7 @@ def cleanQuestionFunc():
     Question mark for clear cache and temporary files
     Opens new window with explanation
     '''
-    newWin(title='Clear cache and tempoary files', content1="That\'s it", winSize='400x200')
+    newWin(title='Clear cache and temporary files', content1="That\'s it", winSize='400x200')
 
 
 def iconQuestionFunc():
@@ -435,7 +435,7 @@ Credits (on GUI)
 '''
 
 # credits at bottom
-currentVersion = '1.4'
+currentVersion = '1.5'
 creditFrame = ttk.Frame(root, padding=10)
 creditFrame.pack()
 creditLab1 = ttk.Label(creditFrame, text='PyInstaller GUI for Windows')
