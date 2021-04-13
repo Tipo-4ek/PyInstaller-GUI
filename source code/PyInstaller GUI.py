@@ -323,6 +323,17 @@ def runPyInstaller():
     Runs PyInstaller in cmd prompt with parameters taken from GUI
     '''
 
+    # Changes to be made: 
+    # Allow working directory to be set by user.
+    # Without dragging the program to directory
+    
+    # Pass cwd parameter to subprocess.call or .run 
+    # subprocess.run(command, cwd='C:/Users/<user>...etc)
+    # Store in a variable so more like:
+    # subprocess.run(command, cwd=UserCwd)
+
+    
+
     # gets user defined parameters into strings
     filePathStr = str(dirPath.get()) + '.py'
     nameStr = str(nameIn.get())
