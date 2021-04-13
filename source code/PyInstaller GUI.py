@@ -331,6 +331,7 @@ def runPyInstaller():
     # subprocess.run(command, cwd='C:/Users/<user>...etc)
     # Store in a variable so more like:
     # subprocess.run(command, cwd=UserCwd)
+    # NOTE: cwd takes raw string type ONLY // Use raw string notation // UserCwd = r'C:/Users/<user>'
 
     
 
@@ -357,11 +358,11 @@ def runPyInstaller():
         distPathStr = '"' + distPathStr + '"'
 
     # list to run with subprocess.call()
-    runStr = 'pyinstaller '
+    runList = ['pyinstaller']       
 
     # checks user parameters (checkboxes), appends to list
     if filePathStr:
-        runStr = runStr + (filePathStr + ' ')
+        runList.append(filePathStr)
     else:
         newWin(
             title='Error',
@@ -369,17 +370,17 @@ def runPyInstaller():
         )
         noRun = True
     if nameStr != "":
-        runStr = runStr + ('--name ')
-        runStr = runStr + (nameStr + ' ')
+        pass
     if oneFile == '1':
-        runStr = runStr + ('--onefile ')
+        runList.append('--onefile')
     if noConsole == '1':
-        runStr = runStr +('--noconsole ')
+        runList.append('--noconsole')
     if cleanCache == '1':
-        runStr = runStr +('--clean ')
+        runList.append('--clean')
     if iconPathCheck == '1':
         if iconPathStr:
-            runStr = runStr + ('--icon=' + iconPathStr + ' ')
+            runList.append('--icon=')
+            runList.append(iconPathStr)
         else:
             noRun = True
             newWin(
@@ -388,8 +389,8 @@ def runPyInstaller():
             )
     if addDataCheck == '1':
         if addDataFilesStr:
-            runStr = runStr + ('--add-data ')
-            runStr = runStr +(addDataFilesStr + ' ')
+            runList.append('--add-data')
+            runList.append(addDataFilesStr)
         else:
             noRun = True
             newWin(
@@ -398,8 +399,8 @@ def runPyInstaller():
             )
     if distPathCheck == '1':
         if distPathStr:
-            runStr = runStr + ('--distpath ')
-            runStr = runStr + (distPathStr)
+            runList.append('--distpath')
+            runList.append(distPathStr)
         else:
             noRun = True
             newWin(
@@ -412,10 +413,10 @@ def runPyInstaller():
     if noRun == False:
         newWin(
             title='Running in terminal:',
-            content1=runStr,
+            content1=runList,
             winSize='700x150'
         )
-        os.system(runStr)
+        subprocess.call(runList)
 
 '''
 ------------------------------
