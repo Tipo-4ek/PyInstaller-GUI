@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk as ttk
+from tkinter.filedialog import askopenfilename, askdirectory
 import os
 import subprocess
 import webbrowser
@@ -189,15 +190,24 @@ def checkUpdate(method='Button'):
             pass
 
 
-def dirQuestionFunc():
+def filePathGet():
+    '''
+    Get file path from user
+    '''
+    global dirpath, filepath
+    filePathDialog = askopenfilename(title='Select .py file', initialdir='/', filetypes=[('Python file', '*.py')])
+    dirpath = str(os.path.split(filePathDialog)[0])
+    filepath = str(os.path.split(filePathDialog)[1])
+
+
+def filePathQuestionFunc():
     '''
     Question mark for file path
     Opens new window with explanation
     '''
     newWin(
-        title='Python File Path:',
-        content1='/directory/file.py',
-        content2='(Starts from where this app is located)',
+        title='Python File:',
+        content1='Select your Python file',
         winSize='400x200'
     )
 
@@ -210,7 +220,7 @@ def nameQuestionFunc():
     newWin(
         title='Application Name',
         content1='Enter custom .exe file name',
-        content2='If no input, will use same name as py file',
+        content2='If no input, will use same name as .py file',
         winSize='400x200'
     )
 
@@ -222,7 +232,7 @@ def oneFileQuestionFunc():
     '''
     newWin(
         title='What is \"One file\"?',
-        content1='This will compile your program into one .exe file',
+        content1='This will bundle your program into one .exe file',
         winSize='400x200'
     )
 
@@ -251,15 +261,31 @@ def cleanQuestionFunc():
     )
 
 
+def iconFileGet():
+    '''
+    Get icon file from user
+    '''
+    try:
+        global iconfile, dirpath
+        iconPathDialog = askopenfilename(title='Select icon file', initialdir=dirpath, filetypes=[('Icon file', '*.ico')])
+        iconfile = str(os.path.split(iconPathDialog)[1])
+    except NameError:
+        newWin(
+            winSize='350x200',
+            title='Error:',
+            content1='Please do all the steps in order'
+        )
+
+
 def iconQuestionFunc():
     '''
     Question mark for custom icon
     Opens new window with explanation
     '''
     newWin(
-        title='Custom icon format:',
-        content1='iconfile.ico',
-        winSize='400x200'
+        title='Custom icon',
+        content1='Please make sure that your icon file is in the same directory as your .py file',
+        winSize='500x150'
     )
 
 
@@ -278,6 +304,23 @@ def dataQuestionFunc():
         button1txt='What is adding data?', button1cmd=whatIsData,
     )
 
+
+def distPathGet():
+    '''
+    Get dist path from user
+    '''
+    try:
+        global distpath
+        distPathDialog = askdirectory(title='Choose dist path', initialdir=dirpath)
+        distpath = str(distPathDialog)
+    except NameError:
+        newWin(
+            winSize='350x200',
+            title='Error:',
+            content1='Please do all the steps in order'
+        )
+
+
 def distQuestionFunc():
     '''
     Question mark for custom bundled app folder
@@ -286,7 +329,8 @@ def distQuestionFunc():
     newWin(
         title='Custom bundled app folder',
         content1='Folder where your app will appear',
-        winSize='400x200'
+        content2='Please make sure this is folder is in the same directory as your .py file',
+        winSize='500x200'
     )
 
 
@@ -333,29 +377,23 @@ def runPyInstaller():
     # subprocess.run(command, cwd=UserCwd)
     # NOTE: cwd takes raw string type ONLY // Use raw string notation // UserCwd = r'C:/Users/<user>'
 
-    
+    global filepath, dirpath, iconfile, distpath
 
     # gets user defined parameters into strings
-    filePathStr = str(dirPath.get()) + '.py'
+    filePathStr = filepath
+    nameCheck = str(nameVar.get())
     nameStr = str(nameIn.get())
     oneFile = str(oneFileVar.get())
     noConsole = str(noConsoleVar.get())
     cleanCache = str(cleanVar.get())
     iconPathCheck = str(iconVar.get())
-    iconPathStr = str(iconPath.get()) + '.ico'
     addDataCheck = str(dataVar.get())
     addDataFilesStr = str(dataIn.get())
     distPathCheck = str(distpathVar.get())
-    distPathStr = str(distpathIn.get())
     noRun = False
+
     if " " in filePathStr:
         filePathStr = '"' + filePathStr + '"'
-    if " " in nameStr:
-        nameStr = '"' + nameStr + '"'
-    if " " in iconPathStr:
-        iconPathStr = '"' + iconPathStr + '"'
-    if " " in distPathStr:
-        distPathStr = '"' + distPathStr + '"'
 
     # list to run with subprocess.call()
     runList = ['pyinstaller']       
@@ -369,8 +407,17 @@ def runPyInstaller():
             content1='No .py file entered'
         )
         noRun = True
-    if nameStr != "":
-        pass
+    if nameCheck == "1":
+        if " " in nameStr:
+            nameStr = '"' + nameStr + '"'
+        if nameStr:
+            runList.append(f'--name={nameStr}')
+        else:
+            noRun = True
+            newWin(
+                title='Error:',
+                content1='No .exe name entered'
+            )
     if oneFile == '1':
         runList.append('--onefile')
     if noConsole == '1':
@@ -378,9 +425,10 @@ def runPyInstaller():
     if cleanCache == '1':
         runList.append('--clean')
     if iconPathCheck == '1':
-        if iconPathStr:
-            runList.append('--icon=')
-            runList.append(iconPathStr)
+        if " " in iconfile:
+            iconfile = '"' + iconfile + '"'
+        if iconfile:
+            runList.append(f'--icon={iconfile}')
         else:
             noRun = True
             newWin(
@@ -389,8 +437,7 @@ def runPyInstaller():
             )
     if addDataCheck == '1':
         if addDataFilesStr:
-            runList.append('--add-data')
-            runList.append(addDataFilesStr)
+            runList.append(f'--add-data={addDataFilesStr}')
         else:
             noRun = True
             newWin(
@@ -398,9 +445,10 @@ def runPyInstaller():
                 content1='No data files entered'
             )
     if distPathCheck == '1':
-        if distPathStr:
-            runList.append('--distpath')
-            runList.append(distPathStr)
+        if " " in distpath:
+            distpath = '"' + distpath + '"'
+        if distpath:
+            runList.append(f'--distpath={distpath}')
         else:
             noRun = True
             newWin(
@@ -416,7 +464,8 @@ def runPyInstaller():
             content1=runList,
             winSize='700x150'
         )
-        subprocess.call(runList)
+        #subprocess.call(runList, cwd=dirpath)
+
 
 '''
 ------------------------------
@@ -434,22 +483,21 @@ checksFrame = ttk.Frame(root, padding=20)
 checksFrame.pack()
 
 # user input py file
-dirPathFrame = ttk.Frame(checksFrame, padding=5)
-dirPathFrame.pack()
-dirPathLab = ttk.Label(dirPathFrame, text='.py File Path')
-dirPathLab.pack(side=LEFT)
-dirPath = ttk.Entry(dirPathFrame)
-dirPath.pack(side=LEFT)
-dirPathPyLab = ttk.Label(dirPathFrame, text='.py')
-dirPathPyLab.pack(side=LEFT)
-dirQuestion = ttk.Button(dirPathFrame, text='?', command=dirQuestionFunc, width=1)
-dirQuestion.pack()
+filePathFrame = ttk.Frame(checksFrame, padding=5)
+filePathFrame.pack()
+filePathLab = ttk.Label(filePathFrame, text='.py File')
+filePathLab.pack(side=LEFT)
+filePath = ttk.Button(filePathFrame, text='Choose .py file', command=filePathGet)
+filePath.pack(side=LEFT)
+filePathQuestion = ttk.Button(filePathFrame, text='?', command=filePathQuestionFunc, width=1)
+filePathQuestion.pack()
 
 # user input .exe name
 nameFrame = ttk.Frame(checksFrame, padding=5)
 nameFrame.pack()
-nameLab = ttk.Label(nameFrame, text='.exe Program Name:')
-nameLab.pack(side=LEFT)
+nameVar = IntVar()
+nameCheck = ttk.Checkbutton(nameFrame, text='Custom .exe Program Name:', variable=nameVar)
+nameCheck.pack(side=LEFT)
 nameIn = ttk.Entry(nameFrame, width=10)
 nameIn.pack(side=LEFT)
 nameInExeLab = ttk.Label(nameFrame, text='.exe')
@@ -488,14 +536,10 @@ cleanQuestion.pack(side=LEFT)
 iconFrame = ttk.Frame(checksFrame, padding=5)
 iconFrame.pack()
 iconVar = IntVar()
-iconCheck = ttk.Checkbutton(iconFrame, text='Custom icon   ', variable=iconVar)
+iconCheck = ttk.Checkbutton(iconFrame, text='Custom icon', variable=iconVar)
 iconCheck.pack(side=LEFT)
-iconLab = ttk.Label(iconFrame, text='Icon path:\n(from directory)')
-iconLab.pack(side=LEFT)
-iconPath = ttk.Entry(iconFrame, width=10)
+iconPath = ttk.Button(iconFrame, text='Choose icon file', command=iconFileGet)
 iconPath.pack(side=LEFT)
-iconPathIcoLab = ttk.Label(iconFrame, text='.ico')
-iconPathIcoLab.pack(side=LEFT)
 iconQuestion = ttk.Button(iconFrame, text='?', command=iconQuestionFunc, width=1)
 iconQuestion.pack(side=LEFT)
 
@@ -516,11 +560,9 @@ dataQuestion.pack(side=LEFT)
 distpathFrame = ttk.Frame(checksFrame, padding=5)
 distpathFrame.pack()
 distpathVar = IntVar()
-distpathCheck = ttk.Checkbutton(distpathFrame, text='Custom bundled app path   ', variable=distpathVar)
+distpathCheck = ttk.Checkbutton(distpathFrame, text='Custom bundled app path', variable=distpathVar)
 distpathCheck.pack(side=LEFT)
-distpathLab = ttk.Label(distpathFrame, text='Path:')
-distpathLab.pack(side=LEFT)
-distpathIn = ttk.Entry(distpathFrame, width=10)
+distpathIn = ttk.Button(distpathFrame, text='Choose path', command=distPathGet)
 distpathIn.pack(side=LEFT)
 distQuestion = ttk.Button(distpathFrame, text='?', command=distQuestionFunc, width=1)
 distQuestion.pack(side=LEFT)
@@ -541,7 +583,7 @@ Credits (on GUI)
 '''
 
 # credits at bottom
-currentVersion = '1.5'
+currentVersion = '1.6'
 creditFrame = ttk.Frame(root, padding=10)
 creditFrame.pack()
 creditLab1 = ttk.Label(creditFrame, text='PyInstaller GUI for Windows')
