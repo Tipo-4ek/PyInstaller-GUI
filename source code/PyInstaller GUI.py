@@ -464,7 +464,7 @@ def runPyInstaller():
             content1=runList,
             winSize='700x150'
         )
-        #subprocess.call(runList, cwd=dirpath)
+        subprocess.call(runList, cwd=dirpath)
 
 
 '''
