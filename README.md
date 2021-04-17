@@ -10,7 +10,11 @@ Video Demonstration: https://drive.google.com/file/d/1dwR2k6FFBZVJRPQ5TziQe4trdZ
 3. Follow easy instructions on PyInstaller GUI
 
 ## Version History:
-### Version 1.6 (current):
+### Version 1.7 (current):
+- Dark mode
+- Edit help + error + success dialog messages
+- Release for macOS
+### Version 1.6:
 - Use file dialog to choose file
 - Fix error when spaces in file name
 - Major bug fixes
