@@ -1,10 +1,12 @@
 from tkinter import *
 from tkinter import ttk as ttk
 from tkinter.filedialog import askopenfilename, askdirectory
+from ttkthemes import ThemedTk
 import os
 import subprocess
 import webbrowser
 import requests
+import platform
 
 
 
@@ -14,7 +16,8 @@ GUI Initializing
 '''
 
 # initialize windoww
-root = Tk()
+root = ThemedTk(theme='equilux')
+root.configure(bg='#464646')
 s = ttk.Style()
 root.geometry('600x630')
 root.title('PyInstaller GUI')
@@ -101,6 +104,7 @@ def newWin(
     '''
     newWin = Toplevel()
     newWin.geometry(winSize)
+    newWin.configure(bg='#464646')
     if title != '':
         winTitleLab = ttk.Label(newWin, text=title, style="NewWin.TLabel")
         winTitleLab.pack()
@@ -284,7 +288,8 @@ def iconQuestionFunc():
     '''
     newWin(
         title='Custom icon',
-        winSize='500x150'
+        winSize='500x150',
+        content1='Use a custom icon',
     )
 
 
@@ -357,6 +362,13 @@ def helpFunc():
         button1txt='PyInstaller website', button1cmd=pyInstallerWebsite,
         button2txt='Create an issue', button2cmd=createIssue,
     )
+
+
+def openPy2App():
+    '''
+    Recommends py2app to macOS users
+    '''
+    webbrowser.open_new_tab('https://pypi.org/project/py2app/')
 
 
 def runPyInstaller():
@@ -435,13 +447,11 @@ def runPyInstaller():
                 content1='No bundled app folder selected'
             )
 
-
     # run pyinstaller in terminal if no errors and opens window with terminal command
     if noRun == False:
         newWin(
-            title='Running in terminal:',
-            content1=runList,
-            winSize='700x150'
+            title='Success',
+            winSize='300x150',
         )
         subprocess.call(runList, cwd=dirpath)
 
@@ -562,7 +572,7 @@ Credits (on GUI)
 '''
 
 # credits at bottom
-currentVersion = '1.6'
+currentVersion = '1.7'
 creditFrame = ttk.Frame(root, padding=10)
 creditFrame.pack()
 creditLab1 = ttk.Label(creditFrame, text='PyInstaller GUI for Windows')
@@ -581,6 +591,16 @@ creditBtnFrame.pack()
 sourcecodeButton.pack(side=LEFT)
 checkupdateButton.pack(side=LEFT)
 helpButton.pack(side=LEFT)
+
+# recommends py2app for macOS users
+if str(platform.system()) == 'Darwin':
+    newWin(
+        winSize='400x150',
+        title='We noticed you are on macOS',
+        content1='py2app is better for macOS Python GUI programs!',
+        content2='(py2app does not work for command line programs)',
+        button1txt='Py2App', button1cmd=openPy2App,
+    )
 
 '''
 ------------------------------
