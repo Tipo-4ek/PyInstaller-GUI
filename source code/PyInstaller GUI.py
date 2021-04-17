@@ -166,7 +166,7 @@ def checkUpdate(method='Button'):
                     version = github_page_html[index]
                 except ValueError:
                     pass
-        
+
         # display popup window if update found
         if float(version) > float(currentVersion):
             updateApp(version)
@@ -367,11 +367,11 @@ def runPyInstaller():
     Runs PyInstaller in cmd prompt with parameters taken from GUI
     '''
 
-    # Changes to be made: 
+    # Changes to be made:
     # Allow working directory to be set by user.
     # Without dragging the program to directory
-    
-    # Pass cwd parameter to subprocess.call or .run 
+
+    # Pass cwd parameter to subprocess.call or .run
     # subprocess.run(command, cwd='C:/Users/<user>...etc)
     # Store in a variable so more like:
     # subprocess.run(command, cwd=UserCwd)
@@ -392,11 +392,8 @@ def runPyInstaller():
     distPathCheck = str(distpathVar.get())
     noRun = False
 
-    if " " in filePathStr:
-        filePathStr = '"' + filePathStr + '"'
-
     # list to run with subprocess.call()
-    runList = ['pyinstaller']       
+    runList = ['pyinstaller']
 
     # checks user parameters (checkboxes), appends to list
     if filePathStr:
@@ -408,8 +405,6 @@ def runPyInstaller():
         )
         noRun = True
     if nameCheck == "1":
-        if " " in nameStr:
-            nameStr = '"' + nameStr + '"'
         if nameStr:
             runList.append(f'--name={nameStr}')
         else:
@@ -425,8 +420,6 @@ def runPyInstaller():
     if cleanCache == '1':
         runList.append('--clean')
     if iconPathCheck == '1':
-        if " " in iconfile:
-            iconfile = '"' + iconfile + '"'
         if iconfile:
             runList.append(f'--icon={iconfile}')
         else:
@@ -445,8 +438,6 @@ def runPyInstaller():
                 content1='No data files entered'
             )
     if distPathCheck == '1':
-        if " " in distpath:
-            distpath = '"' + distpath + '"'
         if distpath:
             runList.append(f'--distpath={distpath}')
         else:
