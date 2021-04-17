@@ -10,7 +10,11 @@ Video Demonstration: https://drive.google.com/file/d/1dwR2k6FFBZVJRPQ5TziQe4trdZ
 3. Follow easy instructions on PyInstaller GUI
 
 ## Version History:
-### Version 1.5 (current):
+### Version 1.6 (current):
+- Use file dialog to choose file
+- Fix error when spaces in file name
+- Major bug fixes
+### Version 1.5:
 - Fix button to check update
 - Add help button
 - Improve newWin() func
