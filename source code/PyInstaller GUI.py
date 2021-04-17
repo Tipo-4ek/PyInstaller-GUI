@@ -284,7 +284,6 @@ def iconQuestionFunc():
     '''
     newWin(
         title='Custom icon',
-        content1='Please make sure that your icon file is in the same directory as your .py file',
         winSize='500x150'
     )
 
@@ -329,7 +328,6 @@ def distQuestionFunc():
     newWin(
         title='Custom bundled app folder',
         content1='Folder where your app will appear',
-        content2='Please make sure this is folder is in the same directory as your .py file',
         winSize='500x200'
     )
 
@@ -366,16 +364,6 @@ def runPyInstaller():
     Main PyInstaller GUI function
     Runs PyInstaller in cmd prompt with parameters taken from GUI
     '''
-
-    # Changes to be made:
-    # Allow working directory to be set by user.
-    # Without dragging the program to directory
-
-    # Pass cwd parameter to subprocess.call or .run
-    # subprocess.run(command, cwd='C:/Users/<user>...etc)
-    # Store in a variable so more like:
-    # subprocess.run(command, cwd=UserCwd)
-    # NOTE: cwd takes raw string type ONLY // Use raw string notation // UserCwd = r'C:/Users/<user>'
 
     global filepath, dirpath, iconfile, distpath
 
