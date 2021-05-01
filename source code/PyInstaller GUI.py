@@ -9,6 +9,10 @@ Made by: Jason Li
 '''
 
 
+
+# print message while GUI loads
+print('\n\n\nWelcome to PyInstaller GUI! Please do not close this terminal window.\n\n\n')
+
 from tkinter import *
 from tkinter import ttk as ttk
 from tkinter.filedialog import askopenfilename, askdirectory
@@ -25,9 +29,6 @@ import platform
 Initializing
 ------------------------------
 '''
-
-# print message while GUI loads
-print('\n\n\nWelcome to PyInstaller GUI! Please do not close this terminal window.\n\n\n')
 
 # initialize window and program
 root = ThemedTk(theme='equilux')
