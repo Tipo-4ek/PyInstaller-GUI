@@ -1,26 +1,41 @@
+'''
+------------------------------
+
+PyInstaller GUI
+
+Made by: Jason Li
+
+------------------------------
+'''
+
+
 from tkinter import *
 from tkinter import ttk as ttk
 from tkinter.filedialog import askopenfilename, askdirectory
 from ttkthemes import ThemedTk
 import os
 import subprocess
-import webbrowser
+from webbrowser import open_new_tab as browser_open
 import requests
 import platform
 
 
 
 '''
-GUI Initializing
+Initializing
 ------------------------------
 '''
 
-# initialize windoww
+# print message while GUI loads
+print('\n\n\nWelcome to PyInstaller GUI! Please do not close this terminal window.\n\n\n')
+
+# initialize window and program
 root = ThemedTk(theme='equilux')
 root.configure(bg='#464646')
 s = ttk.Style()
 root.geometry('600x630')
 root.title('PyInstaller GUI')
+currentVersion = '1.8'
 
 # configure styles
 s.configure("Title.TLabel", font=('*', 25), padding=15)
@@ -37,18 +52,97 @@ title.pack()
 
 
 '''
-------------------------------
 Installing PyInstaller section
+------------------------------
 '''
+
+def installPyInstaller():
+    '''
+    Function to install PyInstaller, opens window with installing options
+    '''
+
+    def installPyInstallerDo(method):
+        if method == 'pip':
+            if str(pipVar.get()) == '1' and str(pip3Var.get()) == '1':
+                newWin(
+                    title='Error:',
+                    content1='pip and pip3 are both selected'
+                )
+            elif str(pipVar.get()) == '0' and str(pip3Var.get()) == '0':
+                newWin(
+                    title='Error:',
+                    content1='Neither pip nor pip3 are selected'
+                )
+            elif str(pipVar.get()) == '1' and str(pip3Var.get()) == '0':
+                os.system('pip install pyinstaller')
+                newWin(
+                    title='Successfully installed PyInstaller',
+                    content1='You can close this window'
+                )
+            elif str(pipVar.get()) == '0' and str(pip3Var.get()) == '1':
+                os.system('pip3 install pyinstaller')
+                newWin(
+                    title='Successfully installed PyInstaller',
+                    content1='You can close this window'
+                )
+        
+        elif method == 'custom':
+            os.system(str(customPyInstallerEntry.get()))
+            newWin(
+                    title='Ran your command in terminal',
+                    content1='You can close this window'
+                )
+
+    installPyInstallerWin = Toplevel()
+    installPyInstallerWin.geometry('450x210')
+    installPyInstallerWin.configure(bg='#464646')
+    installPyInstallerTitle = ttk.Label(installPyInstallerWin, text='Install PyInstaller', style="Title.TLabel")
+    installPyInstallerTitle.pack()
+
+    pipFrame = ttk.Frame(installPyInstallerWin, padding=10)
+    pipFrame.pack()
+    pipVar = IntVar()
+    pip3Var = IntVar()
+    pipCheck = ttk.Checkbutton(pipFrame, text='pip', variable=pipVar)
+    pipCheck.pack(side=LEFT)
+    pipCheck3 = ttk.Checkbutton(pipFrame, text='pip3', variable=pip3Var)
+    pipCheck3.pack(side=LEFT)
+    pipInstallBtn = ttk.Button(pipFrame, text='Install PyInstaller', command=lambda: installPyInstallerDo('pip'))
+    pipInstallBtn.pack(side=LEFT)
+
+    installPyInstallerOrLab = ttk.Label(installPyInstallerWin, text='or', style='NewWin.TLabel')
+    installPyInstallerOrLab.pack()
+
+    customPyInstallerFrame = ttk.Frame(installPyInstallerWin, padding=10)
+    customPyInstallerFrame.pack()
+    customPyInstallerEntry = ttk.Entry(customPyInstallerFrame)
+    customPyInstallerEntry.pack(side=LEFT)
+    customInstallBtn = ttk.Button(customPyInstallerFrame, text='Custom Install PyInstaller', command=lambda: installPyInstallerDo('custom'))
+    customInstallBtn.pack(side=LEFT)
+
+
+installBtnRoot = ttk.Button(root, text='Install PyInstaller', command=installPyInstaller)
+installBtnRoot.pack()
+
+'''
+------------------------------
+'''
+
+
+
+'''
+Old Installing PyInstaller section
+------------------------------
+
 
 # creates div for pip/pip3 install pyinstaller
 pipFrame = ttk.Frame(root, padding=15)
 pipFrame.pack()
 
 def installPyInstaller():
-    '''
+    \'''
     Function for button, installs pyinstaller in cmd prompt
-    '''
+    \'''
     if str(pipVar.get()) == '1' and str(pip3Var.get()) == '1':
         newWin(
             title='Error:',
@@ -81,7 +175,7 @@ pipCheck3.pack(side=LEFT)
 installBtn = ttk.Button(pipFrame, text='Install PyInstaller', command=installPyInstaller)
 installBtn.pack(side=LEFT)
 
-'''
+
 ------------------------------
 '''
 
@@ -133,7 +227,7 @@ def updateApp(version):
     If an update is found (in lines 131-174), will open new window requesting update
     '''
     def updateFunc():
-        webbrowser.open_new_tab('https://github.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(windows).zip')
+        browser_open('https://github.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(windows).zip')
     newWin(
         winSize='400x150',
         title='Update available',
@@ -300,7 +394,7 @@ def dataQuestionFunc():
     '''
     def whatIsData():
         # opens browser tab with explanation for add data files
-        webbrowser.open_new_tab('https://pyinstaller.readthedocs.io/en/stable/spec-files.html#adding-data-files')
+        browser_open('https://pyinstaller.readthedocs.io/en/stable/spec-files.html#adding-data-files')
     newWin(
         winSize='400x200',
         title='Add data format:',
@@ -341,7 +435,7 @@ def sourcecodeFunc():
     '''
     Opens source code on GitHub in browser
     '''
-    webbrowser.open_new_tab('https://github.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/tree/main/source%20code')
+    browser_open('https://github.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/tree/main/source%20code')
 
 
 def helpFunc():
@@ -349,9 +443,9 @@ def helpFunc():
     Opens window with multiple options to help user
     '''
     def pyInstallerWebsite():
-        webbrowser.open_new_tab('https://www.pyinstaller.org')
+        browser_open('https://www.pyinstaller.org')
     def createIssue():
-        webbrowser.open_new_tab('https://github.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/issues')
+        browser_open('https://github.com/HDSB-GWS-ProgrammingClub/PyInstaller-GUI/issues')
     newWin(
         winSize='600x225',
         title='Help',
@@ -368,7 +462,7 @@ def openPy2App():
     '''
     Recommends py2app to macOS users
     '''
-    webbrowser.open_new_tab('https://pypi.org/project/py2app/')
+    browser_open('https://pypi.org/project/py2app/')
 
 
 def runPyInstaller():
@@ -572,7 +666,6 @@ Credits (on GUI)
 '''
 
 # credits at bottom
-currentVersion = '1.7'
 creditFrame = ttk.Frame(root, padding=10)
 creditFrame.pack()
 creditLab1 = ttk.Label(creditFrame, text='PyInstaller GUI for Windows')
