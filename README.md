@@ -9,7 +9,9 @@ Easier way to use PyInstaller without using the command line
 3. Follow easy instructions on PyInstaller GUI
 
 ## Version History:
-### Version 1.7 (current):
+### Version 1.8 (current):
+- New install PyInstaller method
+### Version 1.7:
 - Dark mode
 - Edit help + error + success dialog messages
 - Release for macOS
