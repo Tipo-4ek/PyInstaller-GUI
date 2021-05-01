@@ -1,5 +1,9 @@
 # PyInstaller-GUI
 
+## Download:
+[Windows](https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(windows).zip)\
+[Mac](https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(mac).zip)
+
 ## What is this?
 Easier way to use PyInstaller without using the command line
 
