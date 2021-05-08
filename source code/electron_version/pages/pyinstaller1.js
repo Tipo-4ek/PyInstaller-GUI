@@ -5,11 +5,11 @@ const { platform } = require('os');
 const choosePyFileBtn = document.getElementById('choose-py-file-btn');
 var pyFile = '';
 var pyDir = '';
+var pyDirCwd = '';
 var customIconPath = '';
 var customPathDir = '';
 var customExeBool = false;
 var customIconBool = false;
-var customPathBool = false;
 
 
 
@@ -33,6 +33,17 @@ ipcRenderer.on('return-py-file-dialog', (event, pyFileIn, pyDirIn) => {
 function getReturnedPyFile(pyFileIn, pyDirIn) {
     pyFile = pyFileIn;
     pyDir = pyDirIn;
+    pyDirCwd = pyDir;
+    if (pyDir.indexOf(' ') >= 0) {
+        if (process.platform == 'darwin') {
+            pyDir = pyDir.replaceAll(' ', '\\ ')
+            pyDir = pyDir + '/';
+        }
+        if (process.platform == 'win32') {
+            pyDir = `"${pyDir}"`
+            pyDir = pyDir + '\\';
+        }
+    }
     showCustomize();
 }
 
@@ -57,8 +68,6 @@ function showCustomize() {
         'custom-exe-name-check', 'custom-exe-name-label',
 
         'custom-icon-check', 'custom-icon-check-label',
-
-        'custom-path-check', 'custom-path-check-label',
 
         'one-file-check', 'one-file-check-label',
 
@@ -109,25 +118,12 @@ document.getElementById('custom-icon-check').addEventListener('change', function
     }
 });
 
-// Make custom path button visible
-document.getElementById('custom-path-check').addEventListener('change', function() {
-    if (!customPathBool) {
-        customPathBool = true;
-        document.getElementById('custom-path-check-btn').style.visibility = 'visible';
-        document.getElementById('custom-path-check-label').innerHTML = 'Custom bundled app path:';
-    } else {
-        customPathBool = false;
-        document.getElementById('custom-path-check-btn').style.visibility = 'hidden';
-        document.getElementById('custom-path-check-label').innerHTML = 'Custom bundled app path';
-    }
-});
-
 //------------------------------
 
 
 
 /*
-Icon, path, button functions
+Icon button functions
 ------------------------------
 */
 
@@ -135,19 +131,11 @@ document.getElementById('custom-icon-check-btn').addEventListener('click', funct
     ipcRenderer.send('customize-program', 'custom-icon');
 });
 
-document.getElementById('custom-path-check-btn').addEventListener('click', function() {
-    ipcRenderer.send('customize-program', 'custom-path');
-})
-
 // Get returned path
 ipcRenderer.on('customize-program-return', (event, type, path) => {
     if (type == 'custom-icon') {
         if (path == 'CANCELLED') {ipcRenderer.send('error-msg', 'Custom icon not selected')}
         else {customIconPath = path}
-    }
-    else if (type == 'custom-path') {
-        if (path == 'CANCELLED') {ipcRenderer.send('error-msg', 'Custom bundled app path not selected')}
-        else {customPathDir = path}
     }
 })
 
@@ -164,7 +152,6 @@ function mainRunFunction() {
     let customExeChecked = document.getElementById('custom-exe-name-check').checked;
     let customExeInput = document.getElementById('custom-exe-name-input').value
     let customIconChecked = document.getElementById('custom-icon-check').checked;
-    let customPathChecked = document.getElementById('custom-path-check').checked;
     let oneFileChecked = document.getElementById('one-file-check').checked;
     let noConsoleChecked = document.getElementById('no-console-check').checked;
     let clearCacheChecked = document.getElementById('clear-cache-check').checked;
@@ -176,7 +163,7 @@ function mainRunFunction() {
     // Replace spaces
     if (pyFile.indexOf(' ') >= 0) {
         if (process.platform == 'darwin') {
-            pyFile = pyFile.replace(' ', '\\ ');
+            pyFile = pyFile.replaceAll(' ', '\\ ');
         } else if (process.platform == 'win32') {
             pyFile = `"${pyFile}"`
         }
@@ -197,7 +184,7 @@ function mainRunFunction() {
         } else {
             if (customExeInput.indexOf(' ') >= 0) {
                 if (process.platform == 'darwin') {
-                    customExeInput = customExeInput.replace(' ', '\\ ')
+                    customExeInput = customExeInput.replaceAll(' ', '\\ ')
                 } else if (process.platform == 'win32') {
                     customExeInput = `"${customExeInput}"`
                 }
@@ -214,7 +201,7 @@ function mainRunFunction() {
         } else {
             if (customIconPath.indexOf(' ') >= 0) {
                 if (process.platform == 'darwin') {
-                    customIconPath = customIconPath.replace(' ', '\\ ')
+                    customIconPath = customIconPath.replaceAll(' ', '\\ ')
                 } else if (process.platform == 'win32') {
                     customIconPath = `"${customIconPath}"`
                 }
@@ -223,30 +210,22 @@ function mainRunFunction() {
         }
     }
 
-    // Custom path
-    if (customPathChecked) {
-        if (customPathDir == '' || customPathDir == 'CANCELLED') {
-            ipcRenderer.send('error-msg', 'Custom bundled app path checked but not selected.');
-            noRun = true;
-        } else {
-            if (customPathDir.indexOf(' ') >= 0) {
-                if (process.platform == 'darwin') {
-                    customPathDir = customPathDir.replace(' ', '\\ ')
-                } else if (process.platform == 'win32') {
-                    customPathDir = `"${customPathDir}"`
-                }
-            }
-            execRunStr = `${execRunStr} --distpath=${customPathDir}`;
-        }
-    }
-
     // Clear cache
     if (clearCacheChecked) {execRunStr = `${execRunStr} --clean`;}
 
+
+    // Main run
     if (!noRun) {
-        exec(execRunStr, {'cwd': pyDir});
-        if (customPathChecked) {appPath = customPathDir}
-        else {appPath = pyDir + '/dist'}
+        if (process.platform == 'darwin') {
+            appPath = pyDir
+        } else if (process.platform == 'win32') {
+            appPath = pyDir
+        }
+        
+        exec(execRunStr, {'cwd': pyDirCwd});
+        console.log(execRunStr)
+        console.log(pyDir)
+        console.log(appPath)
 
         let fileManager = 'Show in file manager'
         if (process.platform == 'darwin') {fileManager = ' Show in Finder'}

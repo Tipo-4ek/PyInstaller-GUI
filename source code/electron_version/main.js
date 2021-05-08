@@ -212,20 +212,6 @@ ipcMain.on('customize-program', (event, type) => {
                 event.reply('customize-program-return', 'custom-icon', iconFile)
             }
         })
-    } else if (type == 'custom-path') {
-        dialog.showOpenDialog({
-            title: 'Choose bundled app path',
-            defaultPath: fileDirPath,
-            buttonLabel: 'Select bundled app path',
-            properties: ['openDirectory', 'createDirectory']
-        }).then(result => {
-            if (result.canceled) {event.reply('customize-program-return', 'custom-path', 'CANCELLED')}
-            else {
-                let customPathDir = result.filePaths[0];
-                // Returns icon file to frontend js
-                event.reply('customize-program-return', 'custom-path', customPathDir)
-            }
-        })
     }
 })
 
@@ -244,7 +230,8 @@ ipcMain.on('run-pyinstaller-success', (event, appPath, fileManagerMsg) => {
         let successResponse = (result.response);
         if (successResponse == 1) {
             if (process.platform == 'win32') {exec(`start ${appPath}`, {cwd: '/'})}
-            else {exec(`open ${appPath}`, {cwd: '/'})}
+            else {exec(`open ${appPath}dist/`, {cwd: '/'})}
+            console.log(appPath)
         }
     })
 })

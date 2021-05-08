@@ -36,6 +36,7 @@ button:hover,
 .button:hover {
 	background-color: rgb(211, 211, 211);
 	color: black;
+	cursor: pointer;
 }
 
 input[type="text"] {
