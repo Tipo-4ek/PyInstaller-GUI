@@ -13,7 +13,6 @@ Author: Jason Li
 
 const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
 const path = require('path');
-const { title } = require('process');
 const { exec } = require('child_process');
 require('electron-reload')(__dirname);
 
@@ -104,8 +103,7 @@ function createWindow(loadFile='pages/index.html', loadURL='') {
         height: 600,
         webPreferences: {
             nodeIntegration: true,
-            contextIsolation: false,
-            preload: './preload.js'
+            contextIsolation: false
         }
     })
 
@@ -181,8 +179,6 @@ ipcMain.on("choose-py-file-dialog", (event) => {
         ],
         properties: ['openFile']
     }).then(result => {
-        // Stores python file in mainjs var
-        if (process.platform == 'win32') {fileDirPath = pyFile.substr(0, pyFile.lastIndexOf('\\'))}
         if (result.canceled) {event.reply('return-py-file-dialog', 'CANCELLED', 'CANCELLED')}
         else {
             pyFile = path.parse(result.filePaths[0]).name + '.py';
@@ -194,25 +190,23 @@ ipcMain.on("choose-py-file-dialog", (event) => {
 })
 
 // Icon, path, button function file dialogs
-ipcMain.on('customize-program', (event, type) => {
-    if (type == 'custom-icon') {
-        dialog.showOpenDialog({
-            title: 'Choose icon file',
-            defaultPath: fileDirPath,
-            buttonLabel: 'Select .ico file',
-            properties: ['openFile'],
-            filters: [
-                {name: 'Icon file', extensions: ['ico']}
-            ]
-        }).then(result => {
-            if (result.canceled) {event.reply('customize-program-return', 'custom-icon', 'CANCELLED')}
-            else {
-                let iconFile = path.parse(result.filePaths[0]).name + '.ico';
-                // Returns icon file to frontend js
-                event.reply('customize-program-return', 'custom-icon', iconFile)
-            }
-        })
-    }
+ipcMain.on('custom-icon', (event) => {
+    dialog.showOpenDialog({
+        title: 'Choose icon file',
+        defaultPath: fileDirPath,
+        buttonLabel: 'Select .ico file',
+        properties: ['openFile'],
+        filters: [
+            {name: 'Icon file', extensions: ['ico']}
+        ]
+    }).then(result => {
+        if (result.canceled) {event.reply('custom-icon-return', 'CANCELLED')}
+        else {
+            let iconFile = path.parse(result.filePaths[0]).name + '.ico';
+            // Returns icon file to frontend js
+            event.reply('custom-icon-return', iconFile)
+        }
+    })
 })
 
 // Display error message on event
@@ -230,7 +224,7 @@ ipcMain.on('run-pyinstaller-success', (event, appPath, fileManagerMsg) => {
         let successResponse = (result.response);
         if (successResponse == 1) {
             if (process.platform == 'win32') {exec(`start ${appPath}`, {cwd: '/'})}
-            else {exec(`open ${appPath}dist/`, {cwd: '/'})}
+            else {exec(`open ${appPath}`, {cwd: '/'})}
             console.log(appPath)
         }
     })
