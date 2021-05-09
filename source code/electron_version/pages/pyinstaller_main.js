@@ -218,7 +218,37 @@ function mainRunFunction() {
             appPath = pyDir
         }
         
-        exec(execRunStr, {'cwd': pyDirCwd});
+        if (process.platform == 'darwin') {
+            exec(
+                execRunStr,
+                {
+                    'cwd': pyDirCwd,
+                    'shell': '/bin/zsh'
+                },
+                function(error, stdout, stderr) {
+                    console.log('stdout: ' + stdout);
+                    console.log('stderr: ' + stderr);
+                    if (error !== null) {
+                        console.log('exec error: ' + error);
+                    }
+                }
+            );
+        } else {
+            exec(
+                execRunStr,
+                {
+                    'cwd': pyDirCwd,
+                },
+                function(error, stdout, stderr) {
+                    console.log('stdout: ' + stdout);
+                    console.log('stderr: ' + stderr);
+                    if (error !== null) {
+                        console.log('exec error: ' + error);
+                    }
+                }
+            );
+        }
+
         console.log(execRunStr)
         console.log(pyDir)
         console.log(appPath)

@@ -18,12 +18,14 @@ function pipInstall() {
         ipcRenderer.send('pip-install-error', 'Neither pip nor pip3 are selected.');
     } else if (pipChecked) {
         // Run in terminal
-        exec('pip install pyinstaller');
+        if (process.platform == 'darwin') {exec('pip install pyinstaller', {shell: '/bin/zsh'});}
+        else {exec('pip install pyinstaller');}
         // ipcRenderer = frontend js communicate with mainjs
         ipcRenderer.send('pip-install-success', 'pip install pyinstaller');
     } else if (pip3Checked) {
         // Run in terminal
-        exec('pip3 install pyinstaller');
+        if (process.platform == 'darwin') {exec('pip3 install pyinstaller', {shell: '/bin/zsh'});}
+        else {exec('pip3 install pyinstaller');}
         // ipcRenderer = frontend js communicate with mainjs
         ipcRenderer.send('pip-install-success', 'pip3 install pyinstaller');
     }
@@ -36,7 +38,8 @@ function customInstall() {
     let customInstallInput = document.getElementById('custom-install').value;
     if (customInstallInput != '') {
         // Run in terminal
-        exec(customInstallInput);
+        if (process.platform == 'darwin') {exec(customInstallInput, {shell: '/bin/zsh'});}
+        else {exec(customInstallInput);}
         // ipcRenderer = frontend js communicate with mainjs
         ipcRenderer.send('pip-custom-install');
     } else {ipcRenderer.send('pip-install-error', 'Custom install cannot be blank.')}
