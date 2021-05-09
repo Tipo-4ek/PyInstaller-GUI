@@ -1,13 +1,11 @@
 const { ipcRenderer } = require('electron');
 const { exec } = require('child_process');
-const { platform } = require('os');
 
 const choosePyFileBtn = document.getElementById('choose-py-file-btn');
 var pyFile = '';
 var pyDir = '';
 var pyDirCwd = '';
 var customIconPath = '';
-var customPathDir = '';
 var customExeBool = false;
 var customIconBool = false;
 
@@ -128,15 +126,13 @@ Icon button functions
 */
 
 document.getElementById('custom-icon-check-btn').addEventListener('click', function() {
-    ipcRenderer.send('customize-program', 'custom-icon');
+    ipcRenderer.send('custom-icon');
 });
 
 // Get returned path
-ipcRenderer.on('customize-program-return', (event, type, path) => {
-    if (type == 'custom-icon') {
-        if (path == 'CANCELLED') {ipcRenderer.send('error-msg', 'Custom icon not selected')}
-        else {customIconPath = path}
-    }
+ipcRenderer.on('custom-icon-return', (event, path) => {
+    if (path == 'CANCELLED') {ipcRenderer.send('error-msg', 'Custom icon not selected')}
+    else {customIconPath = path}
 })
 
 //------------------------------
