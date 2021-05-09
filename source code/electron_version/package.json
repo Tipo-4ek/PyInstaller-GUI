@@ -20,7 +20,8 @@
   },
   "build": {
       "appId": "com.pyinstallergui.app",
-      "productName": "PyInstaller GUI"
+      "productName": "PyInstaller GUI",
+      "copyright": ""
   },
   "files": ["build/icon/*"]
 }
