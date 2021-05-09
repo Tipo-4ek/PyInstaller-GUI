@@ -2,9 +2,8 @@
 
 ## Download:
 
-[Windows v(1.8)](<https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(windows).zip>)\
-[Mac (v2.0)](<https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(mac).zip>)\
-[Mac (v1.8)](<https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20old%20(mac).zip>)
+[Windows](<https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(windows).zip>)\
+[Mac](<https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20old%20(mac).zip>)
 
 ## What is this?
 
@@ -17,15 +16,14 @@ Easier way to use PyInstaller without using the command line
 
 ## Version History:
 
-### Version 2.0 (current):
+### Future Version 2.0:
 
-- Currently only available for macOS, Windows coming soon
+- Release soon
 - Rewritten in Electron (Node.js) instead of Tkinter (Python)
 - Better design
 - Removed unused functions on GUI
-- 1.8 still available for download if bugs found
 
-### Version 1.8:
+### Version 1.8 (current):
 
 - New install PyInstaller method
 
