@@ -225,7 +225,6 @@ ipcMain.on('run-pyinstaller-success', (event, appPath, fileManagerMsg) => {
         if (successResponse == 1) {
             if (process.platform == 'win32') {exec(`start ${appPath}`, {cwd: '/'})}
             else {exec(`open ${appPath}`, {cwd: '/'})}
-            console.log(appPath)
         }
     })
 })
