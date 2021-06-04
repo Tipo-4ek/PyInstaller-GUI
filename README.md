@@ -18,10 +18,8 @@ Easier way to use PyInstaller without using the command line
 
 ### Future Version 2.0:
 
-- Release soon
-- Rewritten in Electron (Node.js) instead of Tkinter (Python)
-- Better design
-- Removed unused functions on GUI
+- This version has been suspended indefinitely. You can still use this with `cd "source code/electron_version"`; `npm start`
+- The Tkinter version will be the last version of PyInstaller GUI until further notice
 
 ### Version 1.8 (current):
 
