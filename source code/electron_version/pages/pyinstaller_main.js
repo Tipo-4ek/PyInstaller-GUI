@@ -219,6 +219,7 @@ function mainRunFunction() {
         }
         
         if (process.platform == 'darwin') {
+            execRunStr = execRunStr.replace('pyinstaller', 'python3 -m PyInstaller');
             exec(
                 execRunStr,
                 {
