@@ -3,7 +3,7 @@
 ## Download:
 
 [Windows](<https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(windows).zip>)\
-[Mac](<https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20old%20(mac).zip>)
+[Mac](<https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(mac).zip>)
 
 ## What is this?
 
