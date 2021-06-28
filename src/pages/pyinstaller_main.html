@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>PyInstaller GUI - Select your program</title>
+</head>
+<body>
+    <a href="index.html" class="button"> &#8592; </a>
+    <h2 style="margin-top: 0px;" id="title">Select your program</h2>
+
+    <div class="container">
+        <button id="choose-py-file-btn">Choose Python file</button>
+    </div>
+    <br>
+
+    <div id="checks" style="visibility: hidden;">
+            <input type="checkbox" name="custom-exe-name-check" id="custom-exe-name-check" style="visibility: hidden;">
+            <label for="custom-exe-name-check" id="custom-exe-name-label" style="visibility: hidden;">Custom .exe program name</label>
+            <input type="text" name="custom-exe-name-input" id="custom-exe-name-input" style="visibility: hidden;"><br>
+
+            <input type="checkbox" name="custom-icon-check" id="custom-icon-check" style="visibility: hidden;">
+            <label for="custom-icon-check" id="custom-icon-check-label" style="visibility: hidden;">Custom icon</label>
+            <button id="custom-icon-check-btn" style="visibility: hidden;">Choose icon file</button><br>
+
+            <hr>
+
+            <input type="checkbox" name="one-file-check" id="one-file-check" style="visibility: hidden;">
+            <label for="one-file-check" id="one-file-check-label" style="visibility: hidden;">One file</label><br>
+
+            <input type="checkbox" name="no-console-check" id="no-console-check" style="visibility: hidden;">
+            <label for="no-console-check" id="no-console-check-label" style="visibility: hidden;">No console</label><br>
+
+            <hr>
+
+            <input type="checkbox" name="clear-cache-check" id="clear-cache-check" style="visibility: hidden;">
+            <label for="clear-cache-check" id="clear-cache-check-label" style="visibility: hidden;">Clear cache and temporary files</label><br>
+
+            <hr>
+
+            <div class="container">
+                <button id="pyinstaller-main-run" onclick="mainRunFunction()">Run PyInstaller</button>
+            </div>
+
+    </div>
+
+
+<script src="pyinstaller_main.js"></script>
+</body>
+</html>
