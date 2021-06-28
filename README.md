@@ -16,11 +16,6 @@ Easier way to use PyInstaller without using the command line
 
 ## Version History:
 
-### Future Version 2.0:
-
-- This version has been suspended indefinitely. You can still use this with `cd "source code/electron_version"`; `npm start`
-- The Tkinter version will be the last version of PyInstaller GUI until further notice
-
 ### Version 1.8 (current):
 
 - New install PyInstaller method
