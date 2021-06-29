@@ -2,8 +2,7 @@
 
 ## Download:
 
-[Windows](<https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(windows).zip>)\
-[Mac](<https://github.com/jasonli0616/PyInstaller-GUI/raw/main/PyInstaller%20GUI%20(mac).zip>)
+[Download](<https://github.com/jasonli0616/PyInstaller-GUI/releases>)
 
 ## What is this?
 
@@ -16,7 +15,16 @@ Easier way to use PyInstaller without using the command line
 
 ## Version History:
 
-### Version 1.8 (current):
+### Version 1.9 (current):
+
+- Class based GUI (in development)
+- Menu bar
+- Use OS dialogs
+- Class based custom dialogs
+- Clean up code
+- Fix URLs (repo ownership switch)
+
+### Version 1.8:
 
 - New install PyInstaller method
 

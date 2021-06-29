@@ -3,5 +3,7 @@
 .idea/
 node_modules/
 dist/
+build/
 test.*
 venv/
+__pycache__/
