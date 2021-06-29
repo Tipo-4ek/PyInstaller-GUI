@@ -17,11 +17,11 @@ Easier way to use PyInstaller without using the command line
 
 ### Version 1.9 (current):
 
-- Class based GUI (in development)
+- Class based GUI
 - Menu bar
 - Use OS dialogs
 - Class based custom dialogs
-- Clean up code
+- Clean up code (bug fixes)
 - Fix URLs (repo ownership switch)
 
 ### Version 1.8:
